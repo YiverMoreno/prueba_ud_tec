@@ -64,7 +64,7 @@ export default function Orders() {
       </h1>
 
       <div className="grid gap-6 lg:grid-cols-3">
-        {/* Formulario */}
+      
         <div className="rounded-xl bg-white p-6 shadow-lg">
           <h2 className="mb-4 text-xl font-semibold text-slate-700">
             Create Order
@@ -145,7 +145,6 @@ export default function Orders() {
           </form>
         </div>
 
-        {/* Lista */}
         <div className="lg:col-span-2 rounded-xl bg-white p-6 shadow-lg">
           <div className="mb-6 flex items-center justify-between">
             <h2 className="text-xl font-semibold text-slate-700">

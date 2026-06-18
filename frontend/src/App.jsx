@@ -13,7 +13,7 @@ function App() {
   return (
   <BrowserRouter>
     <div className="min-h-screen bg-slate-100">
-      {/* NAVBAR */}
+      
       <nav className="sticky top-0 z-50 border-b border-slate-200 bg-white shadow-sm">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <h1 className="text-lg font-bold text-slate-800">
@@ -45,7 +45,7 @@ function App() {
         </div>
       </nav>
 
-      {/* CONTENT */}
+      
       <main className="mx-auto max-w-6xl px-4 py-8">
         <Routes>
           <Route path="/" element={<Consumers />} />

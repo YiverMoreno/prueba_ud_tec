@@ -51,7 +51,7 @@ export default function Consumers() {
       </h1>
 
       <div className="grid gap-6 md:grid-cols-3">
-        {/* Formulario */}
+        
         <div className="rounded-xl bg-white p-6 shadow-lg">
           <h2 className="mb-4 text-xl font-semibold text-slate-700">
             Create Consumer
@@ -109,7 +109,7 @@ export default function Consumers() {
           </form>
         </div>
 
-        {/* Lista */}
+      
         <div className="md:col-span-2 rounded-xl bg-white p-6 shadow-lg">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-xl font-semibold text-slate-700">
