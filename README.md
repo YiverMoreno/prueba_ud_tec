@@ -75,7 +75,7 @@ URLs de deploy
 - Backend (Render): https://prueba-ud-tec.onrender.com
 
 Swagger endpoint
-- Documentación interactiva: https://prueba-ud-tec.onrender.com//api-docs
+- Documentación interactiva: https://prueba-ud-tec.onrender.com/api-docs
 - En el backend local: http://localhost:4000/api-docs/
 
 Formato y objetivo
