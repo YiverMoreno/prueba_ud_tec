@@ -22,7 +22,7 @@ export default function Products() {
 
   const loadProducts = async () => {
     const response = await getProducts();
-    setProducts(response.data);
+    setProducts(Array.isArray(response.data.data) ? response.data.data : []);
   };
 
   useEffect(() => {
@@ -30,13 +30,31 @@ export default function Products() {
   }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    await createProduct({
+  if (
+    !form.name.trim() ||
+    !form.description.trim() ||
+    !form.price ||
+    !form.stock
+  ) {
+    alert("All fields are required");
+    return;
+  }
+
+  if (Number(form.stock) < 0 || Number(form.price) < 0) {
+    alert("Stock and price cannot be negative");
+    return;
+  }
+
+  try {
+    const response = await createProduct({
       ...form,
       price: Number(form.price),
       stock: Number(form.stock),
     });
+
+    alert(response.data.message || "Product created successfully");
 
     setForm({
       name: "",
@@ -46,12 +64,28 @@ export default function Products() {
     });
 
     loadProducts();
-  };
+  } catch (error) {
+    alert(
+      error.response?.data?.message ||
+      "Error creating product"
+    );
+  }
+};
 
   const handleDelete = async (id) => {
-    await deleteProduct(id);
+  try {
+    const response = await deleteProduct(id);
+
+    alert(response.data.message || "Product deleted successfully");
+
     loadProducts();
-  };
+  } catch (error) {
+    alert(
+      error.response?.data?.message ||
+      "Error deleting product"
+    );
+  }
+};
 
  
   const openEditModal = (product) => {
@@ -72,6 +106,20 @@ export default function Products() {
   };
 
   const handleUpdate = async (id) => {
+    if (
+    !selectedProduct.name.trim() ||
+    !selectedProduct.description.trim() ||
+    !selectedProduct.price ||
+    !selectedProduct.stock
+  ) {
+    alert("All fields are required");
+    return;
+  }
+
+  if (Number(selectedProduct.stock) < 0 || Number(selectedProduct.price) < 0) {
+    alert("Stock and price cannot be negative");
+    return;
+  }
     if (!selectedProduct) return;
 
     await updateProduct(id, {

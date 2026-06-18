@@ -25,9 +25,9 @@ export default function Orders() {
       getProducts(),
     ]);
 
-    setOrders(ordersResponse.data);
-    setConsumers(consumersResponse.data);
-    setProducts(productsResponse.data);
+    setOrders(Array.isArray(ordersResponse.data.data) ? ordersResponse.data.data : []);
+    setConsumers(Array.isArray(consumersResponse.data.data) ? consumersResponse.data.data : []);
+    setProducts(Array.isArray(productsResponse.data.data) ? productsResponse.data.data : []);
   };
 
   useEffect(() => {
@@ -35,9 +35,10 @@ export default function Orders() {
   }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    await createOrder({
+  try {
+    const response = await createOrder({
       consumerId: Number(form.consumerId),
       items: [
         {
@@ -47,6 +48,8 @@ export default function Orders() {
       ],
     });
 
+    alert(response.data.message || "Order created successfully");
+
     setForm({
       consumerId: "",
       productId: "",
@@ -54,7 +57,13 @@ export default function Orders() {
     });
 
     loadData();
-  };
+  } catch (error) {
+    alert(
+      error.response?.data?.message ||
+      "Error creating order"
+    );
+  }
+};
 
   return (
   <div className="min-h-screen bg-slate-100 py-10">

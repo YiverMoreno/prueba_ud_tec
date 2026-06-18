@@ -7,7 +7,11 @@ const createOrder = async (consumerId, items) => {
   });
 
   if (!consumer) {
-    throw new Error("Consumer not found");
+    const error = new Error(
+      "Consumer not found"
+    );
+    error.statusCode = 404;
+    throw error;
   }
 
   let total = 0;
@@ -21,15 +25,19 @@ const createOrder = async (consumerId, items) => {
     });
 
     if (!product) {
-      throw new Error(
+      const error = new Error(
         `Product ${item.productId} not found`
       );
+      error.statusCode = 404;
+      throw error;
     }
 
     if (product.stock < item.quantity) {
-      throw new Error(
+      const error = new Error(
         `Insufficient stock for ${product.name}`
       );
+      error.statusCode = 409;
+      throw error;
     }
 
     total += Number(product.price) * item.quantity;
