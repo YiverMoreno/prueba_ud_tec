@@ -73,8 +73,9 @@ Relaciones:
 
 ### Ejecutar proyecto
 
+Para la levantar base de datos ejecutar el archivo de docker-compose.yml
 ```bash
-docker compose up --build
+docker compose up -d
 ```
 
 Frontend:
@@ -158,5 +159,5 @@ Base de datos:
 URL del repositorio:
 
 ```text
-https://github.com/usuario/nombre-repositorio
+https://github.com/YiverMoreno/prueba_ud_tec
 ```
