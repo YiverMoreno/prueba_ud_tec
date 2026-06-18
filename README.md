@@ -68,7 +68,7 @@ Variables de entorno (principales)
   - `NODE_ENV` — development|production
   - `SWAGGER_ENABLED` — true|false (opcional)
 - Frontend (archivo .env o variables Vite):
-  - `VITE_API_URL` — URL base de la API (ej: https://mi-backend.onrender.com/api)
+  - `VITE_API_URL` — URL base de la API https://prueba-ud-tec.vercel.app/
 
 URLs de deploy
 - Frontend (Vercel): https://prueba-ud-tec.vercel.app/
@@ -98,6 +98,7 @@ Relaciones:
 * Un producto puede pertenecer a múltiples órdenes.
  ## Diagrama de la bd
  
+ ```mermaid
  erDiagram
 
   CONSUMER ||--o{ ORDER : places
@@ -134,6 +135,7 @@ Relaciones:
     int quantity
     float unitPrice
   }
+```
 
 ## Endpoints principales
 
