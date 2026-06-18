@@ -63,20 +63,20 @@ Instrucciones Docker Compose (local)
 
 Variables de entorno (principales)
 - Backend (archivo .env en `backend/`):
-  - `DATABASE_URL` — URL de conexión PostgreSQL (ej: postgres://user:pass@host:5432/db)
+  - `DATABASE_URL` — URL de conexión PostgreSQL (ej: DATABASE_URL=postgresql://postgres:123456@localhost:5432/preubaud)
   - `PORT` — puerto del servidor (ej: 4000)
   - `NODE_ENV` — development|production
   - `SWAGGER_ENABLED` — true|false (opcional)
 - Frontend (archivo .env o variables Vite):
-  - `VITE_API_URL` — URL base de la API https://prueba-ud-tec.vercel.app/
+  - `VITE_API_URL` — URL base de la API (ej: VITE_BASE_API_URL=http://localhost:4000)
 
 URLs de deploy
 - Frontend (Vercel): https://prueba-ud-tec.vercel.app/
 - Backend (Render): https://prueba-ud-tec.onrender.com
 
 Swagger endpoint
-- Documentación interactiva: https://prueba-ud-tec.onrender.com//api/docs
-- En el backend local: http://localhost:PORT/api/docs
+- Documentación interactiva: https://prueba-ud-tec.onrender.com//api-docs
+- En el backend local: http://localhost:4000/api-docs/
 
 Formato y objetivo
 - Este README sirve como documentación de producto y guía técnica para evaluación, despliegue y puesta en marcha local o con contenedores. Contiene enlaces a READMEs específicos por capa para detalles de uso y despliegue.
