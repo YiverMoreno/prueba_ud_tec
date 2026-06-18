@@ -1,51 +1,86 @@
+# README GENERAL
+
+Descripción
+- Sistema web para gestión de consumidores, productos y órdenes con control estricto de stock.
+- Permite CRUD de consumidores y productos, creación de órdenes que descuentan stock automáticamente y evita stock negativo.
+- API documentada con Swagger; Frontend React consume la API vía Axios.
+
+Arquitectura general
+- Cliente (frontend) SPA en React + Vite desplegado en Vercel.
+- API REST en Node.js + Express usando Prisma ORM sobre PostgreSQL, desplegada en Render.
+- Persistencia: PostgreSQL (container/Docker o servicio gestionado).
+- Orquestación local: `docker-compose` (frontend, backend, postgres).
+
+Stack tecnológico
+- Backend: Node.js, Express, Prisma ORM, PostgreSQL, Swagger (swagger-ui-express, swagger-jsdoc).
+- Frontend: React, Vite, Axios, React Router.
+- Infra: Docker, Docker Compose, Render (backend), Vercel (frontend).
+
+Estructura del proyecto (resumen)
+- Root: `docker-compose.yml`, `README.md`
+- `backend/`
+  - `package.json`, `prisma.config.ts`
+  - `src/`
+    - `app.js`, `server.js`
+    - `config/` (`prisma.js`)
+    - `controllers/`, `services/`, `routes/`, `utils/`
+  - `docs/swagger.js`
+  - `prisma/schema.prisma`
+- `frontend/`
+  - `package.json`, `vite.config.js`
+  - `src/`
+    - `main.jsx`, `App.jsx`
+    - `pages/` (Consumers, Products, Orders)
+    - `services/` (`api.js`, `consumers.js`, `products.js`, `orders.js`)
+    - `components/`
+
+Ejecución local (desarrollo)
+- Backend:
+  ```bash
+  cd backend
+  npm install
+  npx prisma generate
+  npx prisma migrate dev --name init
+  npm run dev
+  ```
+- Frontend:
+  ```bash
+  cd frontend
+  npm install
+  npm run dev
+  ```
+- Requisitos: Node.js >=16, npm, Docker (opcional), PostgreSQL (si no usa Docker).
+
+Instrucciones Docker Compose (local)
+- Levantar servicios (backend, frontend, postgres):
+  ```bash
+  docker-compose up --build
+  ```
+- Detener y remover:
+  ```bash
+  docker-compose down
+  ```
+
+Variables de entorno (principales)
+- Backend (archivo .env en `backend/`):
+  - `DATABASE_URL` — URL de conexión PostgreSQL (ej: postgres://user:pass@host:5432/db)
+  - `PORT` — puerto del servidor (ej: 4000)
+  - `NODE_ENV` — development|production
+  - `SWAGGER_ENABLED` — true|false (opcional)
+- Frontend (archivo .env o variables Vite):
+  - `VITE_API_URL` — URL base de la API (ej: https://mi-backend.onrender.com/api)
+
+URLs de deploy
+- Frontend (Vercel): https://prueba-ud-tec.vercel.app/
+- Backend (Render): https://prueba-ud-tec.onrender.com
+
+Swagger endpoint
+- Documentación interactiva: https://prueba-ud-tec.onrender.com//api/docs
+- En el backend local: http://localhost:PORT/api/docs
+
+Formato y objetivo
+- Este README sirve como documentación de producto y guía técnica para evaluación, despliegue y puesta en marcha local o con contenedores. Contiene enlaces a READMEs específicos por capa para detalles de uso y despliegue.
 # Consumer Orders Management
-
-Aplicación web para la gestión de consumidores, productos y órdenes de compra.
-
-## Tecnologías
-
-### Frontend
-
-* React
-* Vite
-* Tailwind CSS
-
-### Backend
-
-* Node.js
-* Express.js
-
-### Base de Datos
-
-* PostgreSQL
-* Prisma ORM
-
-### Infraestructura
-
-* Docker
-* Docker Compose
-
----
-
-## Arquitectura
-
-El proyecto sigue una arquitectura basada en MVC (Model-View-Controller), separando la lógica de negocio, acceso a datos y presentación.
-
-```text
-backend/
-├── controllers
-├── services
-├── repositories
-├── routes
-├── prisma
-
-frontend/
-├── pages
-├── components
-├── services
-```
-
----
 
 ## Modelo de Datos
 
@@ -61,36 +96,44 @@ Relaciones:
 * Un consumidor puede tener múltiples órdenes.
 * Una orden puede contener múltiples productos.
 * Un producto puede pertenecer a múltiples órdenes.
+ ## Diagrama de la bd
+ 
+ erDiagram
 
----
+  CONSUMER ||--o{ ORDER : places
+  ORDER ||--|{ ORDER_ITEM : contains
+  PRODUCT ||--o{ ORDER_ITEM : referenced
 
-## Instalación
+  CONSUMER {
+    int id
+    string name
+    string email
+    string phone
+    datetime createdAt
+  }
 
-### Requisitos
+  PRODUCT {
+    int id
+    string name
+    string description
+    float price
+    int stock
+  }
 
-* Docker
-* Docker Compose
+  ORDER {
+    int id
+    int consumerId
+    float total
+    datetime createdAt
+  }
 
-### Ejecutar proyecto
-
-Para la levantar base de datos ejecutar el archivo de docker-compose.yml
-```bash
-docker compose up -d
-```
-
-Frontend:
-
-```text
-http://localhost:3000
-```
-
-Backend:
-
-```text
-http://localhost:4000/api
-```
-
----
+  ORDER_ITEM {
+    int id
+    int orderId
+    int productId
+    int quantity
+    float unitPrice
+  }
 
 ## Endpoints principales
 
@@ -121,36 +164,21 @@ POST   /api/orders
 ```
 
 ---
-
 ## Evidencias
 
 ### Consumidores
+![alt text](image.png)
 
-Agregar captura de pantalla.
+![alt text](image-1.png)
 
 ### Productos
 
-Agregar captura de pantalla.
+![alt text](image-2.png)
 
+![alt text](image-3.png)
 ### Órdenes
 
-Agregar captura de pantalla.
-
----
-
-## Despliegue
-
-Frontend:
-
-* Vercel
-
-Backend:
-
-* Render
-
-Base de datos:
-
-* PostgreSQL en Render
+![alt text](image-4.png)
 
 ---
 
